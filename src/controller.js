@@ -13,15 +13,17 @@ export const createNote = (req, res, next) => {
   const isSuccess = notes.filter((note) => note.id === id).length > 0;
 
   if (isSuccess) {
-    return res.status(200).json({
+    return res.status(201).json({
       status : 'success',
-      message : 'catatan berhasil ditambahkan!',
-      data : {nanoid: id}
+      message : 'Catatan berhasil ditambahkan',
+      data : {
+        noteId: id
+      }
     });
   } else {
     return res.status(500).json({
       status : 'fail',
-      message : 'catatan gagal ditambahkan',
+      message : 'Catatan gagal ditambahkan',
     });
   }
 };
