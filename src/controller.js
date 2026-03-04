@@ -43,7 +43,7 @@ export const getNoteById = (req, res) => {
   if (note) {
     return res.json({
       status : 'success',
-      data : {note}
+      data : note
     });
   }else {
     return res.status(404).json({
