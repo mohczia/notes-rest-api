@@ -32,7 +32,7 @@ export const createNote = (req, res, next) => {
 export const getNotes = (req, res) => {
   return res.json({
     status : 'success',
-    data : notes
+    data : { notes }
   });
 };
 
