@@ -48,7 +48,7 @@ export const getNoteById = (req, res) => {
   }else {
     return res.status(404).json({
       status : 'fail',
-      message : 'catatan tidak ditemukan'
+      message : 'Catatan tidak ditemukan'
     });
   }
 };
@@ -68,7 +68,7 @@ export const editNoteById = (req, res) => {
   } else {
     return res.status(404).json({
       status : 'fail',
-      message : 'gagal memperbarui catatan. id tidak ditemukan'
+      message : 'Gagal memperbarui catatan. id tidak ditemukan'
     });
   }
 
@@ -82,12 +82,12 @@ export const deleteNoteById = (req,res) => {
     notes.splice(index, 1);
     return res.json({
       status : 'success',
-      message : 'catatan berhasil dihapus'
+      message : 'Catatan berhasil dihapus'
     });
   } else {
     return res.status(404).json({
       status : 'fail',
-      message : 'catatan gagal dihapus. id tidak ditemukan'
+      message : 'Catatan gagal dihapus. id tidak ditemukan'
     })
   }
 };
