@@ -7,11 +7,14 @@ export const notePayloadSchema = Joi.object({
 });
 
 export const noteUpdatePayloadSchema = Joi.object({
-    title: Joi.string().max(50),
+    title: Joi.string().required().max(50),
     body: Joi.string(),
     tags: Joi.array().items(Joi.string())
 });
 
 export const noteQuerySchema = Joi.object({
-    title: Joi.string().empty(),
-});
+    title: Joi.alternatives().try(
+        Joi.string().allow('', null),
+        Joi.array().items(Joi.string())
+    ),
+}).unknown(true);
