@@ -1,9 +1,11 @@
 import { Pool } from 'pg';
 import { nanoid } from "nanoid";
+import CollaborationRepositories from '../../collaborations/repositories/collaboration-repositories.js';
 
 class NoteRepositories {
     constructor() {
         this.pool = new Pool();
+        this.CollaborationRepositories = CollaborationRepositories;
     }
 
     async createNote({ title, body, tags, owner }) {
@@ -12,8 +14,8 @@ class NoteRepositories {
         const updatedAt = createdAt;
 
         const query = {
-             text: 'INSERT INTO notes(id, title, body, tags, created_at, updated_at, owner) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id, title, body, tags, created_at, updated_at',
-             values: [id, title, body, tags, createdAt, updatedAt, owner],
+            text: 'INSERT INTO notes(id, title, body, tags, created_at, updated_at, owner) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id, title, body, tags, created_at, updated_at',
+            values: [id, title, body, tags, createdAt, updatedAt, owner],
         };
         const result = await this.pool.query(query);
 
@@ -22,20 +24,26 @@ class NoteRepositories {
 
     async getNotes(owner) {
         const query = {
-            text: 'SELECT * FROM notes WHERE owner = $1',
+            text: `SELECT notes.* FROM notes
+            LEFT JOIN collaborations ON collaborations.note_id = notes.id
+            WHERE notes.owner = $1 OR collaborations.user_id = $1
+            GROUP BY notes.id`,
             values: [owner],
         };
 
         const result = await this.pool.query(query)
-        
+
         return result.rows;
     }
 
     async getNoteById(id) {
         const query = {
-            text: 'SELECT * FROM notes WHERE id = $1',
+            text: `SELECT notes.*, users.username
+                   FROM notes
+                   LEFT JOIN users ON users.id = notes.owner
+                   WHERE notes.id = $1`,
             values: [id],
-        }
+        };
 
         const result = await this.pool.query(query);
 
@@ -54,7 +62,7 @@ class NoteRepositories {
             text: 'UPDATE notes SET title = $1, body = $2, tags = $3, updated_at = $4 WHERE id = $5 RETURNING *',
             values: [title, body, tags, updatedAt, id],
         }
-        
+
         const result = await this.pool.query(query);
 
         return result.rows[0];
@@ -68,7 +76,7 @@ class NoteRepositories {
 
         const result = await this.pool.query(query)
 
-       return result.rows.length > 0 ? result.rows[0] : null;
+        return result.rows.length > 0 ? result.rows[0] : null;
     }
 
     async verifyNoteOwner(id, owner) {
@@ -78,6 +86,18 @@ class NoteRepositories {
         };
         const result = await this.pool.query(query);
         return result.rows.length > 0;
+    }
+
+    async verifyNoteAccess(noteId, userId) {
+        const ownerResult = await this.verifyNoteOwner(noteId, userId);
+
+        if (ownerResult) {
+            return ownerResult;
+        }
+
+        const result = await this.CollaborationRepositories.verifyCollaborator(noteId, userId);
+
+        return result;
     }
 }
 

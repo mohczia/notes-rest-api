@@ -47,7 +47,7 @@ async verifyUserCredential(username, password) {
     };
     const user = await this.pool.query(query);
      
-    if (!user) {
+    if (!user.rows.length) {
         return null;
     }
     
@@ -64,6 +64,16 @@ async getAllUsers() {
     const query = {
         text: 'SELECT id, username, fullname FROM users',
     };
+    const result = await this.pool.query(query);
+    return result.rows;
+}
+
+async getUsersByUsername(username) {
+    const query = {
+        text: 'SELECT id, username, fullname FROM users WHERE username LIKE $1',
+        values: [`${username}%`],
+    };
+
     const result = await this.pool.query(query);
     return result.rows;
 }
