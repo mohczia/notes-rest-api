@@ -3,3 +3,4 @@ node_modules
 notes-api-server.pem:Zone.Identifier
 .env
 .prod.env
+package-lock.json
