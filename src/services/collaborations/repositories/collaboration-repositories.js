@@ -1,11 +1,8 @@
-import  Pool  from '../../../database/pool.js';
+import  pool  from '../../../database/pool.js';
 import { nanoid } from "nanoid";
 
 
 class Collaborationrepositories {
-    constructor () {
-        this.pool = new Pool();
-    }
 
     async addCollaboration(noteId, userId) {
         const id = nanoid(16);

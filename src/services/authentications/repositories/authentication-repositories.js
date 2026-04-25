@@ -1,9 +1,6 @@
-import  Pool  from '../../../database/pool.js';
+import  pool  from '../../../database/pool.js';
 
 class AuthenticationRepositories {
-    constructor (){
-        this.pool = new Pool();
-    }
 
     async addRefreshToken(token) {
         const query = {

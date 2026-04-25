@@ -1,10 +1,10 @@
-import  Pool  from '../../../database/pool.js';
+import  pool  from '../../../database/pool.js';
 import { nanoid } from "nanoid";
 import CollaborationRepositories from '../../collaborations/repositories/collaboration-repositories.js';
 
 class NoteRepositories {
     constructor() {
-        this.pool = new Pool();
+       
         this.CollaborationRepositories = CollaborationRepositories;
     }
 

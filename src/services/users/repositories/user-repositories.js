@@ -1,13 +1,10 @@
-import  Pool  from '../../../database/pool.js';
+import  pool  from '../../../database/pool.js';
 import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 
 
 class UserRepositories {
-    constructor () {
-        this.pool = new Pool();
-    }
-
+   
 async createUser({ username, password, fullname }) {
     const id = nanoid(16);
     const hashedPassword = await bcrypt.hash(password, 10);
