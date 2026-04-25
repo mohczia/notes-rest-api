@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import  Pool  from '../../../database/pool.js';
 import { nanoid } from "nanoid";
 import bcrypt from "bcrypt";
 

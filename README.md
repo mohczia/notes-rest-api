@@ -1,91 +1,73 @@
-# Notes API Backend
+# Notes REST API
 
-Simple REST API for a notes application built with Node.js.
-This project provides basic CRUD operations for managing notes.
+A RESTful API for managing notes with authentication, authorization, and collaboration features.
 
-## 🚀 Tech Stack
+---
 
-* Node.js
-* REST API
-* Postman (API Testing)
+## 🚀 Features
+- User Authentication (Register & Login)
+- CRUD Notes (Create, Read, Update, Delete)
+- Notes Collaboration (share notes with other users)
+- Authorization (only owner/collaborator can access notes)
 
-## 📂 Project Structure
+---
 
-```
-src/
-├── controller.js
-├── notes.js
-├── routes.js
-└── server.js
-```
+## 🛠 Tech Stack
+- Node.js
+- Express.js
+- PostgreSQL
 
-* **server.js** → Start the HTTP server
-* **routes.js** → Define API routes
-* **controller.js** → Handle request logic
-* **notes.js** → Store notes data
+---
 
-## ✨ Features
+## 📦 Installation
 
-* Create note
-* Get all notes
-* Get note by ID
-* Update note
-* Delete note
+Clone this repository:
 
-## 📡 API Endpoints
-
-| Method | Endpoint    | Description     |
-| ------ | ----------- | --------------- |
-| POST   | /notes      | Create new note |
-| GET    | /notes      | Get all notes   |
-| GET    | /notes/{id} | Get note by ID  |
-| PUT    | /notes/{id} | Update note     |
-| DELETE | /notes/{id} | Delete note     |
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```
 git clone https://github.com/mohczia/notes-rest-api.git
-```
 
 Install dependencies:
 
-```
 npm install
-```
 
-## ▶️ Run Server
+Run the server:
 
-Start the server:
+npm run start:dev
 
-```
-npm run start
-```
+---
 
-### Local Server
+## 📡 API Endpoints
 
-The server will run on:
+### Notes
+- GET /notes → Get all notes
+- POST /notes → Create a new note
+- GET /notes/{id} → Get note by ID
+- PUT /notes/{id} → Update note
+- DELETE /notes/{id} → Delete note
 
-```
-http://localhost:3000
-```
+---
 
-### Production Server
+## 📁 Project Structure
 
-Example deployed server:
+src/
+ ├── exceptions/
+ ├── middlewares/
+ ├── routes/
+ ├── security/
+ ├── server/
+ ├── services/
+ ├── utils/
+ └── server.js
 
-```
-http://13.215.199.191:3000
-```
+---
 
 ## 🧪 API Testing
 
-API testing is done using the Postman collection included in this repository.
+Postman is available in:
+Notes API Test.postman_collection.json
+postman/Notes API Test.postman_environment.json
 
-Files:
+---
 
-* notes-api-test.postman_collection.json
-* notes-api-local.postman_environment.json
-* notes-api-production.postman_environment.json
+## 👤 Author
+
+M.ZIAULHAQ
