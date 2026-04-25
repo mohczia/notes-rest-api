@@ -15,7 +15,7 @@ async createUser({ username, password, fullname }) {
         text: 'INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
         values: [id, username, hashedPassword, fullname, createdAt, updatedAt],
     };
-    const result = await this.pool.query(query);
+    const result = await pool.query(query);
     return result.rows[0];
 };
 
@@ -24,7 +24,7 @@ async verifyNewUsername (username) {
         text: 'SELECT username FROM users WHERE username = $1',
         values: [username] 
     };
-    const result = await this.pool.query(query);
+    const result = await pool.query(query);
     return result.rows.length > 0;
 };
 
@@ -33,7 +33,7 @@ async getUserById (id) {
         text: 'SELECT * FROM users WHERE id = $1',
         values: [id],
     };
-    const result = await this.pool.query(query);
+    const result = await pool.query(query);
     return result.rows[0];
 };
 
@@ -42,7 +42,7 @@ async verifyUserCredential(username, password) {
         text: 'SELECT id, password FROM users WHERE username = $1',
         values: [username],
     };
-    const user = await this.pool.query(query);
+    const user = await pool.query(query);
      
     if (!user.rows.length) {
         return null;
@@ -61,7 +61,7 @@ async getAllUsers() {
     const query = {
         text: 'SELECT id, username, fullname FROM users',
     };
-    const result = await this.pool.query(query);
+    const result = await pool.query(query);
     return result.rows;
 }
 
@@ -71,7 +71,7 @@ async getUsersByUsername(username) {
         values: [`${username}%`],
     };
 
-    const result = await this.pool.query(query);
+    const result = await pool.query(query);
     return result.rows;
 }
 

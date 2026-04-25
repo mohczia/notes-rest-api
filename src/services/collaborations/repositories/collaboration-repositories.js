@@ -8,11 +8,11 @@ class Collaborationrepositories {
         const id = nanoid(16);
 
         const query = {
-            text: 'INSERT INTO collaborations(id, note_id, user_id) VALUES($1, $2, $3) REURNING id',
+            text: 'INSERT INTO collaborations(id, note_id, user_id) VALUES($1, $2, $3) RETURNING id',
             values: [id, noteId, userId],
         };
 
-        const result = await this.pool.query(query);
+        const result = await pool.query(query);
         return result.rows[0].id;
     }
 
@@ -22,7 +22,7 @@ class Collaborationrepositories {
             values: [noteId, userId],
         };
 
-        const result = await this.pool.query(query);
+        const result = await pool.query(query);
         return result.rows[0];
     }
 
@@ -32,7 +32,7 @@ class Collaborationrepositories {
             values: [noteId, userId],
         };
  
-        const result = await this.pool.query(query);
+        const result = await pool.query(query);
         return result.rows.length > 0;
     }
 }
